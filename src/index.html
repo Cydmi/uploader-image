@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>图片上传</title>
+    <link rel="stylesheet" href="fine-uploader.css">
+    <script src='fine-uploader.js'></script>
+    <script type="text/template" id="qq-template-gallery">
+      <div class="qq-uploader-selector qq-uploader qq-gallery" >
+          <ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">
+              <li>
+                <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">删除</button>
+                  <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                  <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+                      <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                  </div>
+                  <div class="qq-thumbnail-wrapper">
+                      <img class="qq-thumbnail-selector" qq-max-size="600" qq-server-scale>
+                  </div>
+              </li>
+          </ul>
+          <div class="qq-upload-button-selector qq-upload-button"></div>
+      </div>
+    </script>
+  </head>
+  <body>
+    <div class="upload-box" id="file"></div>
+    <script>
+new qq.FineUploader({
+  element: document.getElementById("file"),
+  template: 'qq-template-gallery',
+  debug:false,
+  request: {
+    endpoint: '',//api 接口
+
+    params:{
+            //参数 {key:value}
+    }
+  },
+  deleteFile:{
+    enabled:true,//是否允许删除
+    endpoint:'',//api 接口
+    params:{
+      id:1
+    },
+    deletingFailedText:'删除失败！',
+    deletingStatusText:'删除中...'
+  },
+  scaling:{
+    hideScaled:true,
+    defaultQuality:100
+  }
+  ,
+  validation:{
+    allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']
+
+  },
+  cors:{
+    sendCredentials:true, //跨域cookie效校验等处理
+    expected:true,
+    allowXdr:true
+  },
+  camera:{
+    button:null,
+    ios:false
+  },
+  text:{
+    waitingForResponse:'上传中...'
+  },
+  callbacks: {
+
+      onError: function(id, name, errorReason, xhrOrXdr) {
+          console.log( errorReason);
+          },
+       onComplete:function(id, name, response, xhrOrXdr){
+         console.log(response);
+
+       }
+
+    }
+})
+
+    </script>
+  </body>
+</html>
